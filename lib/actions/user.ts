@@ -10,3 +10,14 @@ export const getUserInfo = async (id: any) => {
     console.log(error);
   }
 };
+
+export const updateAvatar = async (avatarUrl: string, userId: string) => {
+  return await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      avatarUrl,
+    },
+  });
+};

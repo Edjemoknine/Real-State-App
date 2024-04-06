@@ -10,10 +10,16 @@ import {
   Button,
   useDisclosure,
 } from "@nextui-org/react";
-
-const UploadAvatar = () => {
+import FileInput from "@/app/components/FileUpload";
+import Image from "next/image";
+import { uploadAvatar } from "@/lib/upload";
+import { useRouter } from "next/navigation";
+import { updateAvatar } from "@/lib/actions/user";
+const UploadAvatar = ({ userId }: { userId: string }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [image, setImage] = useState<File>();
+  const [isLoading, setLoading] = useState(false);
+  const router = useRouter();
   return (
     <div>
       <button onClick={onOpen}>
@@ -27,13 +33,38 @@ const UploadAvatar = () => {
                 Modal Title
               </ModalHeader>
               <ModalBody>
-                <FileInput />
+                <FileInput
+                  onChange={(e) => setImage((e as any).target.files[0])}
+                />
+                {image && (
+                  <Image
+                    width={100}
+                    height={100}
+                    src={URL.createObjectURL(image)}
+                    alt="Avatar image"
+                  />
+                )}
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
-                  Close
+                  Cancel
                 </Button>
-                <Button color="primary" onPress={onClose}>
+                <Button
+                  isLoading={isLoading}
+                  color="primary"
+                  onPress={async () => {
+                    setLoading(true);
+                    if (!image) {
+                      onClose();
+                      return;
+                    }
+                    const avatarUrl = await uploadAvatar(image!);
+                    const result = await updateAvatar(avatarUrl, userId);
+                    router.refresh();
+                    setLoading(false);
+                    onClose();
+                  }}
+                >
                   Action
                 </Button>
               </ModalFooter>
