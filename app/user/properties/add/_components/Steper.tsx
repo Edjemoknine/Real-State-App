@@ -9,7 +9,7 @@ interface Props {
 }
 const Steper = (props: Props) => {
   return (
-    <div className={cn("flex items-center justify-around", props)}>
+    <div className={cn("flex items-center justify-around mt-4", props)}>
       {props.items.map((item, index) => (
         <>
           <div className="flex flex-col items-center">
@@ -37,7 +37,7 @@ const Steper = (props: Props) => {
                 "border h-0 w-full -mt-4 relative after:absolute after:left-0 after:top-0 after:border after:transition-all after:duration-300 after:ease-in",
                 {
                   "after:w-full after:border-primary-400":
-                    index >= props.activeItem,
+                    index <= props.activeItem,
                 }
               )}
             ></div>
