@@ -5,6 +5,7 @@ import Steper from "./Steper";
 import Basic from "./Basic";
 import { cn } from "@nextui-org/react";
 import Locations from "./Locations";
+import Feature from "./Feature";
 const steps = [
   { label: "Basic" },
   { label: "Location" },
@@ -30,6 +31,11 @@ const PropertyForm = (props: Props) => {
         />
         <Locations
           className={cn({ hidden: step !== 1 })}
+          next={() => setStep((prev) => prev + 1)}
+          prev={() => setStep((prev) => prev - 1)}
+        />
+        <Feature
+          className={cn({ hidden: step !== 2 })}
           next={() => setStep((prev) => prev + 1)}
           prev={() => setStep((prev) => prev - 1)}
         />

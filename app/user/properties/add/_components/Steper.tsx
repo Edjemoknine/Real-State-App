@@ -31,13 +31,13 @@ const Steper = (props: Props) => {
             </div>
             <p>{item.label}</p>
           </div>
-          {index !== props.activeItem - 1 && (
+          {index !== props.items.length - 1 && (
             <div
               className={cn(
                 "border h-0 w-full -mt-4 relative after:absolute after:left-0 after:top-0 after:border after:transition-all after:duration-300 after:ease-in",
                 {
                   "after:w-full after:border-primary-400":
-                    index <= props.activeItem,
+                    index < props.activeItem,
                 }
               )}
             ></div>

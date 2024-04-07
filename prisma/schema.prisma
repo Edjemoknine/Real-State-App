@@ -36,6 +36,21 @@ model Property {
   propertyStatusId Int
 
   location PropertyLocation?
+  feature  PropertyFeature?
+}
+
+model PropertyFeature {
+  id              Int     @id @default(autoincrement())
+  bedrooms        Int
+  bathrooms       Int
+  parkingSpots    Int
+  area            Int
+  hasSwimmingPool Boolean
+  hasGardenYard   Boolean
+  hasBalcony      Boolean
+
+  propertyId Int       @unique
+  property   Property? @relation(fields: [propertyId], references: [id])
 }
 
 model PropertyType {
